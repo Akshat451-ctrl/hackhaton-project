@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+    <!-- Navbar -->
+    <nav class="bg-black shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Icon and Title -->
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-graduation-cap text-white text-2xl"></i>
+                <div class="text-xl font-bold text-white">Skill Bridging</div>
+            </div>
+
+            <!-- Hamburger Menu Button (Mobile Only) -->
+            <div class="block lg:hidden">
+                <button id="menu-toggle" class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul id="navbar" class="hidden lg:flex space-x-6 font-bold text-right">
+                <li><a href="akmap.html"
+                        class="text-white text-lg hover:text-gray-300 transition-transform hover:scale-110">Home</a>
+                </li>
+                <li><a href="calender.html"
+                        class="text-white text-lg hover:text-gray-300 transition-transform hover:scale-110">Booking</a>
+                </li>
+                <li><a href="course.html"
+                        class="text-white text-lg hover:text-gray-300 transition-transform hover:scale-110">Course</a>
+                </li>
+                <li><a href="project.html"
+                        class="text-white text-lg hover:text-gray-300 transition-transform hover:scale-110">Project</a>
+                </li>
+                <li><a href="internship.html"
+                        class="text-white text-lg hover:text-gray-300 transition-transform hover:scale-110">Internship</a>
+                </li>
+                <li><a href="job.html"
+                        class="text-white text-lg hover:text-gray-300 transition-transform hover:scale-110">Job
+                        Portal</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <script>
+        // Toggle Navbar for Mobile View
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbar = document.getElementById('navbar');
+
+        menuToggle.addEventListener('click', () => {
+            navbar.classList.toggle('hidden');
+        });
+    </script>
+
+    <!-- Banner Section -->
+    <section class="relative bg-cover bg-center h-screen"
+        style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtgmzMMB8xm6xQ8gjZBIDKJIRp1fxXcAkPA&s');">
+        <div
+            class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center text-white px-4">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Join our live sessions?</h1>
+            <p class="text-lg md:text-xl mb-8">opportunity, experience and learning. All in one service.</p>
+            <div class="w-full max-w-3xl p-6 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Destination City Input -->
+                    <div class="relative">
+                        <label for="destination" class="block text-white font-bold mb-1">Choose City</label>
+                        <input type="text" id="destination" placeholder="Enter city"
+                            class="w-full px-4 py-2 border border-gray-300 rounded text-black font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            oninput="showSuggestions()">
+                        <ul id="suggestions"
+                            class="absolute bg-white text-black rounded shadow-md w-full max-h-40 overflow-auto hidden">
+                        </ul>
+                    </div>
+                
+                    <!-- Course Type Input -->
+                    <div class="relative">
+                        <label for="courseType" class="block text-white font-bold mb-1">Select Course Type</label>
+                        <select id="courseType"
+                            class="w-full px-4 py-2 border border-gray-300 rounded text-black font-bold focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Choose a course type</option>
+                            <option value="online">Online Course</option>
+                            <option value="webinar">Webinar</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="Offline-Batch">Offline-Batch</option>
+                        </select>
+                    </div>
+                
+                    <!-- Date Input -->
+                    <div>
+                        <label for="date" class="block text-white font-bold mb-1">Short by Date</label>
+                        <input type="date" id="date"
+                            class="w-full px-4 py-2 border border-gray-300 rounded text-black font-bold focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                
+                    <!-- Search Button -->
+                    <div class="flex items-end">
+                        <a href="destination.html" target="_blank">
+                            <button class="px-6 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 transition">
+                                Search
+                            </button>
+                        </a>
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Predefined list of Indian cities
+        const cities = [
+            "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Pune",
+            "Jaipur", "Surat", "Lucknow", "Kanpur", "Nagpur", "Patna", "Indore", "Bhopal", "Agra"
+        ];
+
+        const destinationInput = document.getElementById('destination');
+        const suggestionsList = document.getElementById('suggestions');
+
+        function showSuggestions() {
+            const query = destinationInput.value.toLowerCase();
+            suggestionsList.innerHTML = '';
+            if (!query) {
+                suggestionsList.classList.add('hidden');
+                return;
+            }
+            const filteredCities = cities.filter(city => city.toLowerCase().startsWith(query));
+            filteredCities.forEach(city => {
+                const listItem = document.createElement('li');
+                listItem.textContent = city;
+                listItem.className = 'cursor-pointer px-4 py-2 hover:bg-gray-200';
+                listItem.onclick = () => {
+                    destinationInput.value = city;
+                    suggestionsList.classList.add('hidden');
+                };
+                suggestionsList.appendChild(listItem);
+            });
+            suggestionsList.classList.remove('hidden');
+        }
+
+        function searchDestination() {
+            const destination = destinationInput.value;
+            const month = document.getElementById('month').value;
+            const date = document.getElementById('date').value;
+
+            if (!destination) {
+                alert('Please enter a destination city');
+                return;
+            }
+
+            const queryString = new URLSearchParams({ destination, month, date }).toString();
+            window.location.href = `destination.html?${queryString}`;
+        }
+    </script>
+
+
+
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-4">Courses</h2>
+        <p class="text-lg text-gray-600 mb-12">Best Courses</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://slaconsultantsnoida.in/wp_files/wp-content/uploads_noida/2018/11/Full-Stack-Java-Training-in-Noida.png"
+                    alt="Java Full Stack" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Java Full Stack</h3>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://www.creativeitinstitute.com/images/course/course_1663052056.jpg"
+                    alt="Web Development" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Web Development</h3>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYCXqNMXW0MLqVuhElbgTjCYHhmIKmSPaqlw&s"
+                    alt="Artificial Intelligence" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Artificial Intelligence</h3>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSszbRkAW0-r-V5C6z47GJXkHOswucINlqJw&s"
+                    alt="Data Science" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Data Science</h3>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYebUxdq-vmWzwcc4B79nA4DS1YVmzJKBryA&s"
+                    alt="Machine Learning" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Machine Learning</h3>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKpnVbIFJueN8ZhIgeCfeKyA5NIQBabekCAw&s"
+                    alt="Programming with C and C++" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Programming with C and C++</h3>
+                </div>
+            </div>
+            <!-- Card 7 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgjQX6BfrDxn62-zsygo7WyJcaVdmn8Lbjcw&s"
+                    alt="UI/UX Design" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">UI/UX Design</h3>
+                </div>
+            </div>
+            <!-- Card 8 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJjuAWWU7BpNu_QVmYTCZZAZcCXIb81L317g&s"
+                    alt="Python Programming" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800">Python Programming</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Best Value Trips Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Best Courses</h2>
+            <p class="text-lg text-gray-600 mb-12">Best offers Course from us</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOAtzhPhuuHGBFDyiKn4HoT48XHvtgEUK4Lg&s"
+                        alt="Trip 1" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-gray-500 flex items-center">
+                                ⭐⭐⭐⭐⭐
+                                <span class="ml-1">(4 reviews)</span>
+                            </span>
+                            <span class="text-sm text-gray-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8c-1.3 0-2.6-.2-3.8-.6-1.2-.4-2.4-1-3.5-1.6C3.2 5.2 2 4.1 2 3v6c0 2.2.8 4.3 2.3 6C6 17 9 18.7 12 20.3s6-1.3 8-4c1.5-1.7 2.3-3.8 2.3-6V3c0 1-.8 2.1-2.3 2.8-1.1.6-2.3 1.2-3.5 1.6-1.3.4-2.6.6-3.8.6z">
+                                    </path>
+                                </svg>
+                                5 days
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">MERN Stack</h3>
+                       <!--<p class="text-gray-600 text-sm mb-4">City Tours, Urban</p> --> 
+                        <div class="text-red-500 text-xl font-bold"> ₹999</div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXQUgq5Uc_4cwuio6bzivEYEMfYCrJsjM3Yw&s"
+                        alt="Trip 2" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-gray-500 flex items-center">
+                                ⭐⭐⭐⭐⭐
+                                <span class="ml-1">(8 reviews)</span>
+                            </span>
+                            <span class="text-sm text-gray-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8c-1.3 0-2.6-.2-3.8-.6-1.2-.4-2.4-1-3.5-1.6C3.2 5.2 2 4.1 2 3v6c0 2.2.8 4.3 2.3 6C6 17 9 18.7 12 20.3s6-1.3 8-4c1.5-1.7 2.3-3.8 2.3-6V3c0 1-.8 2.1-2.3 2.8-1.1.6-2.3 1.2-3.5 1.6-1.3.4-2.6.6-3.8.6z">
+                                    </path>
+                                </svg>
+                                7 days
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Spring Boot </h3>
+                        <!--<p class="text-gray-600 text-sm mb-4">Mountains, Lakes</p> -->
+                        <div class="text-red-500 text-xl font-bold"> ₹899</div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLv-HXwwABzYqP6OpPuB3sgEDeHWjXYXpgvg&s" alt="Trip 3"
+                        class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-gray-500 flex items-center">
+                                ⭐⭐⭐⭐
+                                <span class="ml-1">(10 reviews)</span>
+                            </span>
+                            <span class="text-sm text-gray-500 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8c-1.3 0-2.6-.2-3.8-.6-1.2-.4-2.4-1-3.5-1.6C3.2 5.2 2 4.1 2 3v6c0 2.2.8 4.3 2.3 6C6 17 9 18.7 12 20.3s6-1.3 8-4c1.5-1.7 2.3-3.8 2.3-6V3c0 1-.8 2.1-2.3 2.8-1.1.6-2.3 1.2-3.5 1.6-1.3.4-2.6.6-3.8.6z">
+                                    </path>
+                                </svg>
+                                10 days
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">SQL</h3>
+                        <!--<p class="text-gray-600 text-sm mb-4">Historic Sites, Cuisine</p>-->
+                        <div class="text-red-500 text-xl font-bold"> ₹999</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto text-center">
+            <!-- Why Choose Us Header -->
+            <h2 class="text-4xl font-semibold mb-6">Why Choose Us</h2>
+            <p class="text-lg mb-12"> We deliver innovative, industry-aligned solutions that transform classroom learning into job-ready skills, bridging the gap between education and employability</p>
+
+            <!-- Logos and Descriptions -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- First Logo Section -->
+                <div class="flex flex-col items-center">
+                    <div class="mb-4">
+                        <!-- Replace with your logo image -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNsdNhAdDCNJBUdfHxabluW1NgNLKRHyUlzw&s"
+                            alt="Handpicked Hotels" class="w-20 h-20" />
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-2">Hackathon </h3>
+                    <p class="text-gray-600">
+                        We empower students with industry-relevant, real-world skills through an innovative, scalable solution designed to transform education into employability, making a lasting impact.
+                    </p>
+                </div>
+
+                <!-- Second Logo Section -->
+                 
+                <div class="flex flex-col items-center">
+                    <div class="mb-4">
+                        <!-- Replace with your logo image -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2pmTdF20arGixSmn4M5XVzPm3mJ6ufBneAg&s"
+                            alt="Affordable Flights" class="w-20 h-20" />
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-2"> Practical, Job-Ready Skills</h3>
+                    <p class="text-gray-600">
+                        We bridge the gap between classroom theory and real-world application by offering hands-on learning experiences tailored to industry needs
+                    </p>
+                </div>
+
+                <!-- Third Logo Section -->
+                <div class="flex flex-col items-center">
+                    <div class="mb-4">
+                        <!-- Replace with your logo image -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWs83RJxmqY9ptSIgiLMz5EkA7R6SaurzkDA&s"
+                            alt="Convenient Transport" class="w-20 h-20" />
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-2">Real-World Impact</h3>
+                    <p class="text-gray-600">
+                        
+Our solution directly addresses the critical skills gap by transforming traditional learning into job-ready expertise, ensuring hackathon ideas have a tangible, lasting impact.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles & Tips Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto text-center mb-12">
+            <h2 class="text-5xl font-bold text-gray-800">Latest jobs on Skill Bridging</h2>
+            <p class="text-lg text-gray-600 mt-4">Explore some of the best job from around the platform</p>
+        </div>
+
+        <!-- Cards Container -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 container mx-auto px-4">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsRet_4y9sW3MJvRxCPsGu5CclwbBwGdiOiQ&s"
+                    alt="Card 1" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">frontend internship</h3>
+                    <p class="text-gray-600">Develop a hands-on, project-based curriculum that integrates real-world coding challenges and industry tools to bridge the gap between classroom learning and job-ready skills for front-end developers.</p>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMZOJFyNMTEOfcmdJZoqW4N47-YoOwm-AW6g&s" alt="Card 2"
+                    class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Backend intership </h3>
+                    <p class="text-gray-600">Design a practical, real-world oriented curriculum that emphasizes backend frameworks, databases, and API integration to ensure students gain the technical skills demanded by the industry..</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiwD1Ci-XW-Kg8IpLRUuShCULjHk3Ut58lHw&s"
+                    alt="Card 3" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Full Stack intership</h3>
+                    <p class="text-gray-600">aunch a full-stack internship program that blends hands-on project experience with industry-relevant skills, bridging classroom learning and real-world job requirements..</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer Section -->
+    <footer class="bg-black text-white py-16">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Left Side: Award and Short Paragraph -->
+            <div class="flex flex-col justify-center items-start">
+                <h3 class="text-3xl font-semibold mb-4">Award</h3>
+                <p class="text-gray-400">Empowering Future Talent: Bridging Classroom Learning and Job Skills with Innovation and Impact.</p>
+            </div>
+
+            <!-- Center Left: Contact Info, Location, Social Icons -->
+            <div class="flex flex-col justify-center items-start">
+                <h3 class="text-3xl font-semibold mb-4">Contact Info</h3>
+                <p class="text-gray-400 mb-2">123 Street, City, Country</p>
+                <p class="text-gray-400 mb-2">+123 456 7890</p>
+                <p class="text-gray-400 mb-4">info@Skill.com</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Center Right: Recent Trips (6 Small Images) -->
+            <div class="flex flex-col justify-center items-center text-center">
+                <h3 class="text-3xl font-semibold mb-4">Recent Trips</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <!-- Images -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnIa6nlY_g3pj_PcUmPBaMjj2tZ9RF9zHCWQ&s" alt="Trip 1" class="w-full h-24 object-cover rounded-md">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5q8QTOBqv5D2IiYT-H2zuXNe-ostEiw9rHw&s" alt="Trip 2" class="w-full h-24 object-cover rounded-md">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKimrjFWdSL-1d7EGY0excHnxtFU0AN29WNw&s" alt="Trip 3" class="w-full h-24 object-cover rounded-md">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbgTORUHmC4YjEEiiipugyirj2tcbD3v4r6Q&s" alt="Trip 4" class="w-full h-24 object-cover rounded-md">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVh92ftbNnTlRufMetzZkZhZdcoxs-pakGVQ&s" alt="Trip 5" class="w-full h-24 object-cover rounded-md">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYxKcXgG9w2VHAY_8NdrPfDh5HqzD9I5wPOA&s" alt="Trip 6" class="w-full h-24 object-cover rounded-md">
+                </div>
+            </div>
+
+            <!-- New Column: Distance Learning -->
+            <div class="flex flex-col justify-center items-start">
+                <h3 class="text-3xl font-semibold mb-4">Distance Learning</h3>
+                <p class="text-gray-400 mb-4">Access learning materials from anywhere in the world and grow your skills at your own pace.</p>
+                <ul class="list-disc pl-5 text-gray-400">
+                    <li>Flexible Schedules</li>
+                    <li>Certified Courses</li>
+                    <li>Interactive Sessions</li>
+                    <li>24/7 Support</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="text-gray-400 text-sm">© 2024 Copy Right By <span class="text-lg font-semibold text-red-500">Kalpvriksh</span>.</p>
+        </div>
+    </footer>
+
+</body>

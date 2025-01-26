@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location and Course Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        // Parse query parameters
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                city: params.get('city') || 'Unknown City',
+                course: params.get('course') || 'Unknown Course',
+            };
+        }
+
+        // Display course details
+        function displayCourseDetails() {
+            const { city, course } = getQueryParams();
+            document.getElementById('cityName').textContent = city;
+            document.getElementById('courseName').textContent = course;
+
+            // For demo purposes, add mock course data based on city and course.
+            const courseList = document.getElementById('courses');
+            const courses = [
+                {
+                    city: "New Delhi",
+                    course: "Software Engineering Basics",
+                    img: "https://via.placeholder.com/200",
+                    price: "₹20,000",
+                    description: "A comprehensive introduction to Software Engineering concepts."
+                },
+                {
+                    city: "Bangalore",
+                    course: "Machine Learning with Python",
+                    img: "https://via.placeholder.com/200",
+                    price: "₹25,000",
+                    description: "Learn the fundamentals of Machine Learning using Python."
+                },
+                // Add more courses here based on city
+            ];
+
+            // Filter courses based on city and course
+            const filteredCourses = courses.filter(c => c.city === city && c.course === course);
+
+            // Display the courses
+            filteredCourses.forEach(course => {
+                const courseItem = document.createElement('li');
+                courseItem.classList.add('bg-white', 'rounded-lg', 'shadow', 'p-4', 'mb-4', 'flex', 'flex-col', 'items-center');
+                courseItem.innerHTML = `
+                    <img src="${course.img}" alt="${course.course}" class="w-full h-48 object-cover rounded mb-4">
+                    <h4 class="text-lg font-bold mb-2 text-center">${course.course}</h4>
+                    <p class="text-gray-600 mb-2 text-center">Price: <strong>${course.price}</strong></p>
+                    <p class="text-gray-600 mb-4 text-center">${course.description}</p>
+                `;
+                courseList.appendChild(courseItem);
+            });
+        }
+
+        // Handle form submission and page refresh
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const city = document.getElementById('city').value;
+            const course = document.getElementById('course').value;
+
+            // Update the URL with query parameters and reload to show results
+            const newUrl = window.location.pathname + '?city=' + encodeURIComponent(city) + '&course=' + encodeURIComponent(course);
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            displayCourseDetails();
+        }
+
+        window.onload = displayCourseDetails;
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl font-bold">Select Location and Course</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Location and Course Selection -->
+        <div id="courseFormContainer" class="bg-white rounded shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Choose a City and Course</h2>
+            <form id="courseForm" onsubmit="handleFormSubmit(event)">
+                <div class="mb-4">
+                    <label for="city" class="block text-lg font-medium">Select City</label>
+                    <select id="city" name="city" class="w-full p-2 border border-gray-300 rounded">
+                        <option value="New Delhi">New Delhi</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Chennai">Chennai</option>
+                        <!-- Add more cities here -->
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="course" class="block text-lg font-medium">Select Course</label>
+                    <select id="course" name="course" class="w-full p-2 border border-gray-300 rounded">
+                        <option value="Software Engineering Basics">Software Engineering Basics</option>
+                        <option value="Advanced Java Programming">Advanced Java Programming</option>
+                        <option value="Machine Learning with Python">Machine Learning with Python</option>
+                        <option value="Web Development with Node.js">Web Development with Node.js</option>
+                        <!-- Add more courses here -->
+                    </select>
+                </div>
+
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full">Search</button>
+            </form>
+        </div>
+
+        <!-- Display Course Details based on City and Course -->
+        <div id="courseDetailsContainer" class="bg-white rounded shadow p-6">
+            <h2 class="text-2xl font-bold mb-4" id="cityName"></h2>
+            <p class="text-lg"><strong>Course: </strong><span id="courseName"></span></p>
+
+            <section class="mt-6">
+                <h3 class="text-xl font-bold mb-6">Available Courses in Your City</h3>
+                <ul id="courses" class="list-none pl-0"></ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-blue-600 text-white py-4 text-center">
+        <p>&copy; 2024 Travel Explorer. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
